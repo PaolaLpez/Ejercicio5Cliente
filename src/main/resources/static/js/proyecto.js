@@ -345,16 +345,29 @@ function validarTarea3(){
 }
 
 function eliminarTarea(id_tarea){
-	
 	$.ajax({
 		url : "/eliminarTarea",
 		contentType:"application/json",
-		data : JSON.stringify({id_tarea:id_tarea}),
+		data : JSON.stringify({id_tarea: Number(id_tarea)}),
 		type : "POST",
 		success: function(){
 			var id = document.getElementById("IdProyectoURL").value;
+			if (!id) {
+				var urlParams = new URLSearchParams(window.location.search);
+				id = urlParams.get('id_proyecto');
+			}
 			var url = `proyecto?id_proyecto=${id}`;
-            window.location.href= url;}
+            window.location.href= url;
+		},
+		error: function(err){
+			console.error("Error eliminando tarea:", err);
+			var id = document.getElementById("IdProyectoURL").value;
+			if (!id) {
+				var urlParams = new URLSearchParams(window.location.search);
+				id = urlParams.get('id_proyecto');
+			}
+			window.location.href= `proyecto?id_proyecto=${id}`;
+		}
 	});
 }
 
@@ -417,42 +430,51 @@ function verificarComentario(){
 
 function guardarComentario(){
 	var comentario = $('#comentarioT').val();
+	if (!comentario || comentario.trim() === "") {
+		return;
+	}
 	let now = new Date();
-	let day = ('0' + now.getDate()).slice(-2);        // Día del mes (dos dígitos)
-	let month = ('0' + (now.getMonth() + 1)).slice(-2); // Mes (dos dígitos)
-	let year = now.getFullYear().toString().slice(-2); // Año (dos últimos dígitos)
-	let hour = ('0' + now.getHours()).slice(-2);       // Hora (dos dígitos)
-	let minute = ('0' + now.getMinutes()).slice(-2);   // Minutos (dos dígitos)
-	let fecha = `${year}/${month}/${day} ${hour}:${minute}`;
+	let day = ('0' + now.getDate()).slice(-2);
+	let month = ('0' + (now.getMonth() + 1)).slice(-2);
+	let year = now.getFullYear();
+	let hour = ('0' + now.getHours()).slice(-2);
+	let minute = ('0' + now.getMinutes()).slice(-2);
+	let second = ('0' + now.getSeconds()).slice(-2);
+	let fecha = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 	
 	var usuarioString = localStorage.getItem("usuario");
-	var usuario = JSON.parse(usuarioString);
+	var usuario = usuarioString ? JSON.parse(usuarioString) : {nombre: "Usuario"};
 	
 	$.ajax({
             url: '/saveComentario',
             contentType: 'application/json',
             data: JSON.stringify({
-                id_tarea: $('#id_tarea').val(), // Obtener el ID de la tarea
+                id_tarea: $('#id_tarea').val(),
                 texto_comentario: comentario,
                 fecha_hora: fecha,
                 id_usuario: usuario.nombre
             }),
             type: 'POST',
             success: function(response) {
-				
-                // Manejar la respuesta del servidor según sea necesario
                 console.log('Comentario guardado exitosamente');
-                // Puedes actualizar la UI si es necesario
                 var id = document.getElementById("IdProyectoURL").value;
-				var url = `proyecto?id_proyecto=${id}`;
+                if (!id) {
+                    var urlParams = new URLSearchParams(window.location.search);
+                    id = urlParams.get('id_proyecto');
+                }
+                var url = `proyecto?id_proyecto=${id}`;
 	            window.location.href= url;
             },
             error: function(error) {
                 console.error('Error al guardar el comentario:', error);
-                // Manejar errores según sea necesario
+                var id = document.getElementById("IdProyectoURL").value;
+                if (!id) {
+                    var urlParams = new URLSearchParams(window.location.search);
+                    id = urlParams.get('id_proyecto');
+                }
+                window.location.href= `proyecto?id_proyecto=${id}`;
             }
         }); 
-	
 }
 
 

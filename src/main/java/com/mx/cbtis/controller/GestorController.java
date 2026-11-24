@@ -269,53 +269,63 @@ public class GestorController {
 	}
 	
 	@PostMapping("/saveTarea")
-	public ModelAndView setSaveTareas(@ModelAttribute Tareas tareas) {
-		
-		RestTemplate template = new RestTemplate();
-		String urlservicebd = backendUrl + "/addTareas";
-		ResponseEntity<Integer> response = template.postForEntity(urlservicebd, tareas, Integer.class);
+	public ModelAndView setSaveTareas(@ModelAttribute Tareas tareas, @RequestParam(value = "id_proyecto", required = false) Integer idProyectoParam) {
+		Integer idProj = tareas.getId_proyecto() != null ? tareas.getId_proyecto() : idProyectoParam;
+		try {
+			RestTemplate template = new RestTemplate();
+			String urlservicebd = backendUrl + "/addTareas";
+			template.postForEntity(urlservicebd, tareas, Integer.class);
+		} catch (Exception e) {
+			System.err.println("Error guardando tarea: " + e.getMessage());
+		}
 		ModelAndView mav = new ModelAndView("redirect:/proyecto");
-		mav.addObject("id_proyecto", tareas.getId_proyecto());
-		
+		if (idProj != null) {
+			mav.addObject("id_proyecto", idProj);
+		}
 		return mav;
 	}
+
 	@PostMapping("/saveComentario")
-	public String setSaveComentario(@RequestBody Comentarios comentarios) {
-		
-		RestTemplate template = new RestTemplate();
-		String urlservicebd = backendUrl + "/addComentario";
-		ResponseEntity<Integer> response = template.postForEntity(urlservicebd, comentarios, Integer.class); 
-		
-		return "proyecto";
+	@ResponseBody
+	public ResponseEntity<Integer> setSaveComentario(@RequestBody Comentarios comentarios) {
+		try {
+			RestTemplate template = new RestTemplate();
+			String urlservicebd = backendUrl + "/addComentario";
+			Integer resp = template.postForObject(urlservicebd, comentarios, Integer.class);
+			return ResponseEntity.ok(resp != null ? resp : 1);
+		} catch (Exception e) {
+			System.err.println("Error guardando comentario: " + e.getMessage());
+			return ResponseEntity.ok(0);
+		}
 	}
 	
-	
 	@PostMapping("/actualizarTarea")
-	public ResponseEntity<Object> updateTarea(@RequestBody  Tareas tarea) {
-		RestTemplate template = new RestTemplate();
-		Map<String,Integer> params = new HashMap<String,Integer>();
-		params.put("id_tarea", tarea.getId_tarea());
-		String urlservicebd = backendUrl + "/buscarTarea?id_tarea={id_tarea}";
-		Tareas tareas = template.getForObject(urlservicebd, Tareas.class, params);
-		
-		ResponseEntity<Object> objeto = new ResponseEntity<Object>(tareas, HttpStatusCode.valueOf(200));
-		
-		return objeto;
+	public ResponseEntity<Object> updateTarea(@RequestBody Tareas tarea) {
+		try {
+			RestTemplate template = new RestTemplate();
+			Map<String,Integer> params = new HashMap<String,Integer>();
+			params.put("id_tarea", tarea.getId_tarea());
+			String urlservicebd = backendUrl + "/buscarTarea?id_tarea={id_tarea}";
+			Tareas tareas = template.getForObject(urlservicebd, Tareas.class, params);
+			return new ResponseEntity<Object>(tareas, HttpStatusCode.valueOf(200));
+		} catch (Exception e) {
+			return new ResponseEntity<Object>(new Tareas(), HttpStatusCode.valueOf(200));
+		}
 	}
 	
 	@PostMapping("/eliminarTarea")
-	public ModelAndView eliminarTarea(@RequestBody Tareas tareas) {
-		System.out.println("El id d de la tarea es: " + tareas.getId_tarea());
-		RestTemplate template = new RestTemplate();
-		String urlservicebd = backendUrl + "/deleteTareas";
-		HttpEntity<Tareas> request = new HttpEntity<Tareas>(tareas);
-		ResponseEntity<Integer> response = template.exchange(urlservicebd, HttpMethod.DELETE,request,Integer.class);
-		
-		/*Map<String,Prestamo> params = new HashMap<String,Prestamo>();
-		params.put("prestamo", prestamo);
-		template.delete(urlservicebd,params);*/
-		
-		return new ModelAndView("redirect:/proyecto");
+	@ResponseBody
+	public ResponseEntity<Integer> eliminarTarea(@RequestBody Tareas tareas) {
+		try {
+			RestTemplate template = new RestTemplate();
+			String urlservicebd = backendUrl + "/deleteTareas";
+			HttpEntity<Tareas> request = new HttpEntity<Tareas>(tareas);
+			ResponseEntity<Integer> response = template.exchange(urlservicebd, HttpMethod.DELETE, request, Integer.class);
+			return ResponseEntity.ok(response.getBody() != null ? response.getBody() : 1);
+		} catch (Exception e) {
+			System.err.println("Error eliminando tarea: " + e.getMessage());
+			return ResponseEntity.ok(0);
+		}
 	}
 	
 	@PostMapping("/verificarTarea")

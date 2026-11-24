@@ -247,7 +247,7 @@
 		<div class="modal modal-lg fade" id="editarTarea" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 		    <div class="modal-content">
-				<form method="post" th:action="saveTarea" th:object="${tarea}">
+				<form method="post" th:action="@{/saveTarea}" th:object="${tarea}">
 			      <div class="modal-header">
 			        <h1 class="modal-title fs-5" id="nameTarea"></h1>
 			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
