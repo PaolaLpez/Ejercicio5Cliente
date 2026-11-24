@@ -69,9 +69,9 @@ $(document).ready(function() {
 				var tarjeta = `
 	            <ul class="my-2">
 	              <li>
-					<div class="my-2 badge text-bg-light-subtle mx-auto d-flex">
-						<button type="button" class="btn btn-light text-start d-grid gap-2 border border-${tarea.estado}" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
-						<button data-bs-toggle="modal" data-bs-target="#modalAlerta" onclick="obtenerInfo(${tarea.id_tarea}, 'hiddenId', '${tarea.nombre}')" class="bg-light-subtle m-1 p-2 border border-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+					<div class="my-2 badge text-bg-light-subtle mx-auto d-flex align-items-center tarea-item-wrapper">
+						<button type="button" class="btn btn-light text-start border border-${tarea.estado} btn-tarea-texto" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
+						<button data-bs-toggle="modal" data-bs-target="#modalAlerta" onclick="obtenerInfo(${tarea.id_tarea}, 'hiddenId', '${tarea.nombre}')" class="bg-light-subtle m-1 p-2 border border-0 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
 						  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
 						  </svg>
 						</button>
@@ -81,7 +81,7 @@ $(document).ready(function() {
             	`;
             	
             	var lateral1 = `
-	            	<button type="button" class="btn btn-light text-start d-grid gap-2 dropdown-item" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
+	            	<button type="button" class="btn btn-light text-start dropdown-item btn-tarea-texto" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
             	`;
             	
             	
@@ -117,9 +117,9 @@ $(document).ready(function() {
 				var tarjeta2 = `
 	            <ul class="my-2">
 	              <li>
-					<div class="my-2 badge text-bg-light-subtle mx-auto d-flex">
-						<button type="button" class="btn btn-light text-start d-grid gap-2 border border-${tarea.estado}" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
-						<button onclick="eliminarTarea(${tarea.id_tarea});" class="bg-light-subtle m-1 p-2 border border-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+					<div class="my-2 badge text-bg-light-subtle mx-auto d-flex align-items-center tarea-item-wrapper">
+						<button type="button" class="btn btn-light text-start border border-${tarea.estado} btn-tarea-texto" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
+						<button data-bs-toggle="modal" data-bs-target="#modalAlerta" onclick="obtenerInfo(${tarea.id_tarea}, 'hiddenId', '${tarea.nombre}')" class="bg-light-subtle m-1 p-2 border border-0 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
 						  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
 						  </svg>
 						</button>
@@ -129,7 +129,7 @@ $(document).ready(function() {
             	`;
             	
             	var lateral2 = `
-	            	<button type="button" class="btn btn-light text-start d-grid gap-2 dropdown-item" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
+	            	<button type="button" class="btn btn-light text-start dropdown-item btn-tarea-texto" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
             	`;
             	
             	// Crea comentarios
@@ -162,9 +162,9 @@ $(document).ready(function() {
 			   var tarjeta3 = `
 	            <ul class="my-2">
 	              <li>
-					<div class="my-2 badge text-bg-light-subtle mx-auto d-flex">
-						<button type="button" class="btn btn-light text-start d-grid gap-2 border border-${tarea.estado}" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
-						<button onclick="eliminarTarea(${tarea.id_tarea});" class="bg-light-subtle m-1 p-2 border border-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+					<div class="my-2 badge text-bg-light-subtle mx-auto d-flex align-items-center tarea-item-wrapper">
+						<button type="button" class="btn btn-light text-start border border-${tarea.estado} btn-tarea-texto" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
+						<button data-bs-toggle="modal" data-bs-target="#modalAlerta" onclick="obtenerInfo(${tarea.id_tarea}, 'hiddenId', '${tarea.nombre}')" class="bg-light-subtle m-1 p-2 border border-0 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
 						  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
 						  </svg>
 						</button>
@@ -174,7 +174,7 @@ $(document).ready(function() {
 	            `;
 	            
 	            var lateral3 = `
-	            	<button type="button" class="btn btn-light text-start d-grid gap-2 dropdown-item" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
+	            	<button type="button" class="btn btn-light text-start dropdown-item btn-tarea-texto" data-bs-toggle="modal" data-bs-target="#editarTarea" onclick="actualizarTarea(${tarea.id_tarea});comentarios(${tarea.id_tarea})">${tarea.nombre}</button>
             	`;
 	            
 	            // Crea comentarios

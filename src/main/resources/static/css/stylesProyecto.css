@@ -68,4 +68,29 @@ body{
 	text-align: center;
 }
 
+/* Ajuste para que las tareas no se salgan de sus contenedores y hagan salto de linea */
+.tarea-item-wrapper {
+	width: 100%;
+	max-width: 100%;
+	white-space: normal;
+	word-break: break-word;
+	overflow-wrap: break-word;
+}
+
+.tarea-item-wrapper .btn-tarea-texto {
+	flex: 1 1 auto;
+	min-width: 0;
+	white-space: normal !important;
+	word-break: break-word !important;
+	overflow-wrap: break-word !important;
+	text-align: left;
+}
+
+#tareasPendientes ul, #enCurso ul, #trabajoTerminado ul {
+	padding-left: 1rem;
+	padding-right: 1rem;
+	list-style-position: inside;
+}
+
+
 
