@@ -270,8 +270,7 @@ public class GestorController {
 	}
 	
 	@PostMapping("/saveTarea")
-	public ModelAndView setSaveTareas(@ModelAttribute Tareas tareas, @RequestParam(value = "id_proyecto", required = false) Integer idProyectoParam) {
-		Integer idProj = tareas.getId_proyecto() != null ? tareas.getId_proyecto() : idProyectoParam;
+	public ModelAndView setSaveTareas(@ModelAttribute Tareas tareas) {
 		try {
 			RestTemplate template = new RestTemplate();
 			String urlservicebd = backendUrl + "/addTareas";
@@ -280,8 +279,8 @@ public class GestorController {
 			System.err.println("Error guardando tarea: " + e.getMessage());
 		}
 		ModelAndView mav = new ModelAndView("redirect:/proyecto");
-		if (idProj != null) {
-			mav.addObject("id_proyecto", idProj);
+		if (tareas != null && tareas.getId_proyecto() != null) {
+			mav.addObject("id_proyecto", tareas.getId_proyecto());
 		}
 		return mav;
 	}
