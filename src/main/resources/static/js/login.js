@@ -44,6 +44,12 @@ function validarLogin(){
 					localStorage.setItem("usuario", JSON.stringify(data));
 					window.location.href = 'inicio';
 				}
+			},
+			error: function(xhr, status, error){
+				console.error("Error en comunicación:", xhr, status, error);
+				var myToast = document.querySelector('#alerta5');
+				var toast = new bootstrap.Toast(myToast);
+				toast.show();
 			}
 		});
 	}

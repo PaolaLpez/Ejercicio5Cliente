@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import jakarta.annotation.PostConstruct;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -35,12 +36,24 @@ public class GestorController {
 	@Value("${gestor.backend.url:https://ejercicio5myapigestor-pm77.onrender.com}")
 	private String backendUrl = "https://ejercicio5myapigestor-pm77.onrender.com";
 
-	public void setBackendUrl(String backendUrl) {
-		if (backendUrl != null && backendUrl.endsWith("/")) {
-			this.backendUrl = backendUrl.substring(0, backendUrl.length() - 1);
-		} else {
-			this.backendUrl = backendUrl;
+	@PostConstruct
+	public void sanitizeBackendUrl() {
+		if (backendUrl != null) {
+			backendUrl = backendUrl.trim();
+			while (backendUrl.endsWith("/")) {
+				backendUrl = backendUrl.substring(0, backendUrl.length() - 1);
+			}
 		}
+	}
+
+	public void setBackendUrl(String backendUrl) {
+		if (backendUrl != null) {
+			backendUrl = backendUrl.trim();
+			while (backendUrl.endsWith("/")) {
+				backendUrl = backendUrl.substring(0, backendUrl.length() - 1);
+			}
+		}
+		this.backendUrl = backendUrl;
 	}
 
 	
@@ -149,12 +162,20 @@ public class GestorController {
 	
 	@PostMapping("/verificarLogin")
 	public ResponseEntity<Usuario> verificarUsuario(@RequestBody Usuario paramUser) {
-		String urlservicebd = backendUrl + "/getUsuarioLogin";
-		RestTemplate  template = new RestTemplate();
-		ResponseEntity<Usuario> response = template.postForEntity(urlservicebd,paramUser,Usuario.class);
-		
-		return response;
-
+		try {
+			String urlservicebd = backendUrl + "/getUsuarioLogin";
+			RestTemplate template = new RestTemplate();
+			Usuario user = template.postForObject(urlservicebd, paramUser, Usuario.class);
+			if (user == null) {
+				user = new Usuario();
+				user.setNombre("000");
+			}
+			return ResponseEntity.ok(user);
+		} catch (Exception e) {
+			Usuario fallback = new Usuario();
+			fallback.setNombre("000");
+			return ResponseEntity.ok(fallback);
+		}
 	}
 	
 	/*@PostMapping("/obtenerTareas")
@@ -298,18 +319,26 @@ public class GestorController {
 	
 	@PostMapping("/verificarTarea")
 	public ResponseEntity<Integer> verificarTarea(@RequestBody Tareas paramName){
-		String urlservicebd = backendUrl + "/addTareas";
-		RestTemplate template = new RestTemplate();
-		ResponseEntity<Integer> response = template.postForEntity(urlservicebd, paramName, Integer.class);
-		return response;
+		try {
+			String urlservicebd = backendUrl + "/addTareas";
+			RestTemplate template = new RestTemplate();
+			Integer resp = template.postForObject(urlservicebd, paramName, Integer.class);
+			return ResponseEntity.ok(resp != null ? resp : 0);
+		} catch (Exception e) {
+			return ResponseEntity.ok(0);
+		}
 	}
 	
 	@PostMapping("/cambiosTareas")
 	public ResponseEntity<Integer> cambiosTareas(@RequestBody Tareas paramDatos){
-		String urlservicebd = backendUrl + "/addTareas";
-		RestTemplate template = new RestTemplate();
-		ResponseEntity<Integer> response = template.postForEntity(urlservicebd, paramDatos, Integer.class);
-		return response;
+		try {
+			String urlservicebd = backendUrl + "/addTareas";
+			RestTemplate template = new RestTemplate();
+			Integer resp = template.postForObject(urlservicebd, paramDatos, Integer.class);
+			return ResponseEntity.ok(resp != null ? resp : 0);
+		} catch (Exception e) {
+			return ResponseEntity.ok(0);
+		}
 	}
 	
 	@PostMapping("/consultarTareas")
