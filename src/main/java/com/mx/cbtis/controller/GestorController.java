@@ -32,8 +32,8 @@ import com.mx.cbtis.modelo.Usuario;
 @Controller
 public class GestorController {
 
-	@Value("${gestor.backend.url:http://localhost:8081}")
-	private String backendUrl = "http://localhost:8081";
+	@Value("${gestor.backend.url:https://ejercicio5myapigestor-pm77.onrender.com}")
+	private String backendUrl = "https://ejercicio5myapigestor-pm77.onrender.com";
 
 	public void setBackendUrl(String backendUrl) {
 		if (backendUrl != null && backendUrl.endsWith("/")) {
