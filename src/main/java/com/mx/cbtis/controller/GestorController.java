@@ -108,13 +108,14 @@ public class GestorController {
 	
 	@PostMapping("/saveProyecto")
 	public ModelAndView setSaveProyecto(@ModelAttribute Proyectos proyecto) {
-
-    	RestTemplate template = new RestTemplate();
-    	String urlservicebd = backendUrl + "/addProyecto";
-    	ResponseEntity<Integer> response = template.postForEntity(urlservicebd,proyecto,Integer.class);
-
-    	return new ModelAndView("redirect:/inicio");
-
+		try {
+			RestTemplate template = new RestTemplate();
+			String urlservicebd = backendUrl + "/addProyecto";
+			template.postForEntity(urlservicebd, proyecto, Integer.class);
+		} catch (Exception e) {
+			System.err.println("Error en saveProyecto: " + e.getMessage());
+		}
+		return new ModelAndView("redirect:/inicio");
 	}
 	
 	@PostMapping("/consultarProyectos")
