@@ -36,7 +36,11 @@ public class GestorController {
 	private String backendUrl = "http://localhost:8081";
 
 	public void setBackendUrl(String backendUrl) {
-		this.backendUrl = backendUrl;
+		if (backendUrl != null && backendUrl.endsWith("/")) {
+			this.backendUrl = backendUrl.substring(0, backendUrl.length() - 1);
+		} else {
+			this.backendUrl = backendUrl;
+		}
 	}
 
 	
